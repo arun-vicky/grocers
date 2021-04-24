@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>Add product</h2>
+<mat-dialog-content class="mat-typography">
+  <form class="example-form">
+    <mat-form-field class="full-width">
+      <mat-label>Name</mat-label>
+      <input matInput [(ngModel)]="data.name" name="name">
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>Price</mat-label>
+      <input matInput [(ngModel)]="data.price" name="price">
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>Description</mat-label>
+      <textarea matInput [(ngModel)]="data.description" name="description"></textarea>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>Image Url</mat-label>
+      <input matInput [(ngModel)]="data.image" name="image">
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="data">Save</button>
+</mat-dialog-actions>
