@@ -11,9 +11,11 @@ import { HeaderComponent } from './header/header.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MaterialModule } from './material/material.module';
 import { ProductDialogComponent } from './product-dialog/product-dialog.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
-  {path: 'dashboard', component: DashboardComponent },
+  { path: '', component: LoginComponent },
+  { path: 'dashboard', component: DashboardComponent },
 ];
 
 @NgModule({
@@ -21,7 +23,8 @@ const routes: Routes = [
     AppComponent,
     DashboardComponent,
     HeaderComponent,
-    ProductDialogComponent
+    ProductDialogComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
