@@ -19,12 +19,33 @@ export class ProductService {
     private http: HttpClient,
   ) { }
 
-  private productsUrl = 'api/heroes';
+  private baseUrl = 'http://localhost:4100/v1/products';
 
   getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.productsUrl)
+    return this.http.get<Product[]>(`${this.baseUrl}/getallproducts`)
     .pipe(
       catchError(this.handleError<Product[]>('getProducts', []))
+    );
+  }
+
+  addProduct(product: Product): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/addproduct`, product)
+    .pipe(
+      catchError(this.handleError<any>('addProduct'))
+    );
+  }
+
+  updateProduct(product): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/updateproduct`, product)
+    .pipe(
+      catchError(this.handleError<any>('updateProduct'))
+    );
+  }
+
+  deleteProduct(product): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}/deleteproduct?id=${product._id}`)
+    .pipe(
+      catchError(this.handleError<any>('deleteProduct'))
     );
   }
 

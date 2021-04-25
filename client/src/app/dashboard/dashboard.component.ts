@@ -1,32 +1,32 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { ProductDialogComponent } from '../product-dialog/product-dialog.component';
-
+import { ProductService } from '../product.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  
-  productList = [{
-    id: '1',
-    name: 'Aashirvaad Superior MP Atta, 5kg',
-    image: 'https://material.angular.io/assets/img/examples/shiba2.jpg',
-    price: '100',
-    description: 'Aashirvaad Superior MP Atta is made using the 4-step advantage process which ensures 100% pure and natural whole wheat atta and retention of its natural dietary fibres and nutrients'
-  },{
-    id: '2',
-    name: 'Aashirvaad Superior MP Atta, 5kg',
-    image: 'https://material.angular.io/assets/img/examples/shiba2.jpg',
-    price: '100',
-    description: 'Aashirvaad Superior MP Atta is made using the 4-step advantage process which ensures 100% pure and natural whole wheat atta and retention of its natural dietary fibres and nutrients'
-  }];
+  productList = [];
+  defaultImg = 'assets/image/groceries.png';
   constructor(
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public productService: ProductService,
+    public router: Router
   ) {}
 
   ngOnInit(): void {
+    this.getProducts();
+    if(!sessionStorage.getItem('isAdminLoggedIn')) {
+      this.router.navigate(['']);
+    }
+  }
+
+  getProducts() {
+    this.productService.getProducts()
+      .subscribe((data: any) => this.productList = data);
   }
 
   openProductDialog(product?: any) {
@@ -35,7 +35,17 @@ export class DashboardComponent implements OnInit {
       data: product || {}
     });
     dialogRef.afterClosed().subscribe(value => {
-      this.productList.push(value);
+      if (value._id) {
+       this.productService.updateProduct(value)
+       .subscribe((data: any) => {this.getProducts()});
+      } else if (value.name || value.price) {
+        this.productService.addProduct(value)
+        .subscribe((data: any) => {this.getProducts()});
+      }
     });
+  }
+
+  deleteProduct(product: any) {
+    this.productService.deleteProduct(product).subscribe((data: any) => {this.getProducts()});
   }
 }

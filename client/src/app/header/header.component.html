@@ -1,12 +1,7 @@
 <mat-toolbar class=headerContainer>
-  <button mat-icon-button fxHide.gt-xs>
+  <button mat-icon-button>
     <mat-icon (click)="onToggleSidenav()">menu</mat-icon>
   </button>
   <span>Grocers</span>
   <span class="menu-spacer"></span>
-  <div fxFlex fxLayout fxLayoutAlign="end" fxHide.xs>
-    <ul fxLayout class="navigation-items">
-      <li><a routerLink="/dashboard" class="m-r-15">Dashboard</a></li>
-    </ul>
-  </div>
 </mat-toolbar>
